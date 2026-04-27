@@ -1,0 +1,11 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: springboot-vue-refactor
+  datasource:
+    url: jdbc:mysql://localhost:3306/legacy_vue_refactor?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul
+    username: legacy_user
+    password: legacy_pass
+    driver-class-name: com.mysql.cj.jdbc.Driver

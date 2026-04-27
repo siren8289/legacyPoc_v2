@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>레거시 운영 포털</title>
+    <link rel="stylesheet" href="static/css/site.css">
+    <style>
+        .home-content { flex: 1; padding: 20px; }
+        .menu-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+        .menu-card {
+            display: block; text-decoration: none; color: #111827;
+            background: #fff; border: 1px solid #d1d5db; border-radius: 8px; padding: 14px;
+        }
+        .menu-card:hover { border-color: #2563eb; }
+        .menu-title { margin: 0 0 8px; font-size: 16px; }
+        .menu-desc { margin: 0; color: #6b7280; font-size: 13px; }
+    </style>
+</head>
+<body>
+<div class="topbar">
+    <div class="brand">레거시 운영 포털</div>
+    <div class="topbar-meta">홈 / v0.9 레거시</div>
+</div>
+<div class="layout">
+    <aside class="sidebar">
+        <div class="sidebar-title">메인 메뉴</div>
+        <a class="menu-link" href="pages/investor.html">투자자 관리</a>
+        <a class="menu-link" href="pages/warehouse-io.html">입출고 처리</a>
+        <a class="menu-link" href="pages/order-status.html">주문 현황</a>
+        <a class="menu-link" href="pages/settlement.html">정산 관리</a>
+        <a class="menu-link" href="pages/dashboard.html">통합 대시보드</a>
+    </aside>
+    <main class="home-content">
+        <h1 class="page-title">레거시 운영 포털</h1>
+        <p class="page-subtitle">화면 단위 구현과 중복 코드가 많은 사이트형 대시보드 샘플</p>
+        <section class="kpi-row">
+            <div class="kpi-card"><div class="kpi-label">전체 업무 화면</div><div class="kpi-value">5</div></div>
+            <div class="kpi-card"><div class="kpi-label">공통 API</div><div class="kpi-value">1</div></div>
+            <div class="kpi-card"><div class="kpi-label">중복 JS 파일</div><div class="kpi-value">5</div></div>
+            <div class="kpi-card"><div class="kpi-label">리팩토링 우선순위</div><div class="kpi-value">높음</div></div>
+        </section>
+        <section class="menu-grid">
+            <a class="menu-card" href="pages/investor.html">
+                <h2 class="menu-title">투자자 관리</h2>
+                <p class="menu-desc">투자자 조회/등급/메모 관리 화면</p>
+            </a>
+            <a class="menu-card" href="pages/warehouse-io.html">
+                <h2 class="menu-title">입출고 처리</h2>
+                <p class="menu-desc">입출고 상태 조회 및 운영 체크</p>
+            </a>
+            <a class="menu-card" href="pages/order-status.html">
+                <h2 class="menu-title">주문 현황</h2>
+                <p class="menu-desc">주문 처리상태 및 금액 조회</p>
+            </a>
+            <a class="menu-card" href="pages/settlement.html">
+                <h2 class="menu-title">정산 관리</h2>
+                <p class="menu-desc">정산 대상/금액 검토 화면</p>
+            </a>
+            <a class="menu-card" href="pages/dashboard.html">
+                <h2 class="menu-title">통합 대시보드</h2>
+                <p class="menu-desc">업무 요약 지표와 통합 목록</p>
+            </a>
+        </section>
+    </main>
+</div>
+</body>
+</html>

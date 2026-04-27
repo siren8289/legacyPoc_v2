@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>정산 관리 화면 (레거시 샘플)</title>
+    <link rel="stylesheet" href="../static/css/site.css">
+    <link rel="stylesheet" href="../static/css/settlement.css">
+</head>
+<body>
+<div class="topbar">
+    <div class="brand">레거시 운영 포털</div>
+    <div class="topbar-meta">정산 / v0.9 레거시</div>
+</div>
+<div class="layout">
+    <aside class="sidebar">
+        <div class="sidebar-title">메인 메뉴</div>
+        <a class="menu-link" href="investor.html">투자자 관리</a>
+        <a class="menu-link" href="warehouse-io.html">입출고 처리</a>
+        <a class="menu-link" href="order-status.html">주문 현황</a>
+        <a class="menu-link active" href="settlement.html">정산 관리</a>
+        <a class="menu-link" href="dashboard.html">통합 대시보드</a>
+    </aside>
+    <main class="content">
+        <h1 class="page-title">정산 관리 화면</h1>
+        <p class="page-subtitle">정산 조회/검토를 위한 화면 중심 업무 페이지</p>
+        <section class="kpi-row">
+            <div class="kpi-card"><div class="kpi-label">당일 정산 건수</div><div class="kpi-value">86</div></div>
+            <div class="kpi-card"><div class="kpi-label">승인 대기</div><div class="kpi-value">12</div></div>
+            <div class="kpi-card"><div class="kpi-label">정산 금액(백만)</div><div class="kpi-value">1,942</div></div>
+            <div class="kpi-card"><div class="kpi-label">오류 의심</div><div class="kpi-value">4</div></div>
+        </section>
+        <section class="panel">
+            <h2 class="panel-title">정산 목록</h2>
+            <div class="search-panel">
+                <label for="searchName">정산대상</label>
+                <input type="text" id="searchName" placeholder="이름/코드">
+                <button id="searchBtn">조회</button>
+            </div>
+            <table id="settlementTable">
+                <thead>
+                <tr>
+                    <th>정산ID</th>
+                    <th>대상명</th>
+                    <th>등급</th>
+                    <th>정산금액</th>
+                    <th>기준상품</th>
+                    <th>비고</th>
+                </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </section>
+    </main>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="../static/js/common-table.js"></script>
+<script src="../static/js/settlement.js"></script>
+</body>
+</html>

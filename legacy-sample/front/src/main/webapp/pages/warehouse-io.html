@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>입출고 처리 화면 (레거시 샘플)</title>
+    <link rel="stylesheet" href="https://cdn.realgrid.com/latest/realgrid-style.css">
+    <link rel="stylesheet" href="../static/css/site.css">
+    <link rel="stylesheet" href="../static/css/warehouse-io.css">
+</head>
+<body>
+<div class="topbar">
+    <div class="brand">레거시 운영 포털</div>
+    <div class="topbar-meta">입출고 / v0.9 레거시</div>
+</div>
+<div class="layout">
+    <aside class="sidebar">
+        <div class="sidebar-title">메인 메뉴</div>
+        <a class="menu-link" href="investor.html">투자자 관리</a>
+        <a class="menu-link active" href="warehouse-io.html">입출고 처리</a>
+        <a class="menu-link" href="order-status.html">주문 현황</a>
+        <a class="menu-link" href="settlement.html">정산 관리</a>
+        <a class="menu-link" href="dashboard.html">통합 대시보드</a>
+    </aside>
+    <main class="content">
+        <h1 class="page-title">입출고 처리 화면</h1>
+        <p class="page-subtitle">업무 담당자가 입출고 상태를 조회하는 화면</p>
+        <section class="kpi-row">
+            <div class="kpi-card"><div class="kpi-label">당일 입고</div><div class="kpi-value">68</div></div>
+            <div class="kpi-card"><div class="kpi-label">당일 출고</div><div class="kpi-value">59</div></div>
+            <div class="kpi-card"><div class="kpi-label">지연 건수</div><div class="kpi-value">7</div></div>
+            <div class="kpi-card"><div class="kpi-label">확인 필요</div><div class="kpi-value">3</div></div>
+        </section>
+        <section class="panel">
+            <h2 class="panel-title">입출고 목록</h2>
+            <div class="search-panel">
+                <button id="createBtn" type="button">신규등록</button>
+                <button id="searchBtn">조회</button>
+            </div>
+            <div id="ioGrid"></div>
+            <div id="gridFallbackWrap" style="display:none;">
+                <div class="fallback-notice">RealGrid 로딩 실패로 기본 테이블 모드로 동작 중입니다.</div>
+                <table id="ioFallbackTable">
+                    <thead>
+                    <tr>
+                        <th>WAREHOUSE_IO_ID</th>
+                        <th>WAREHOUSE_NAME</th>
+                        <th>PRODUCT_CODE</th>
+                        <th>PRODUCT_NAME</th>
+                        <th>PRODUCT_CATEGORY</th>
+                        <th>IN_QTY</th>
+                        <th>OUT_QTY</th>
+                        <th>CURRENT_STOCK</th>
+                        <th>CLIENT_NAME</th>
+                        <th>STATUS</th>
+                        <th>삭제</th>
+                    </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+</div>
+
+<div id="detailModal" class="legacy-modal" style="display:none;">
+    <div class="legacy-modal-box">
+        <div class="legacy-modal-header">
+            <h3>입출고 상세/수정</h3>
+            <button id="closeModalBtn" type="button">X</button>
+        </div>
+        <div class="legacy-modal-body">
+            <input type="hidden" id="WAREHOUSE_IO_ID">
+            <div class="form-grid">
+                <label>WAREHOUSE_NAME <input id="WAREHOUSE_NAME" type="text"></label>
+                <label>PRODUCT_CODE <input id="PRODUCT_CODE" type="text"></label>
+                <label>PRODUCT_NAME <input id="PRODUCT_NAME" type="text"></label>
+                <label>PRODUCT_CATEGORY <input id="PRODUCT_CATEGORY" type="text"></label>
+                <label>IN_QTY <input id="IN_QTY" type="number"></label>
+                <label>OUT_QTY <input id="OUT_QTY" type="number"></label>
+                <label>CURRENT_STOCK <input id="CURRENT_STOCK" type="number"></label>
+                <label>CLIENT_NAME <input id="CLIENT_NAME" type="text"></label>
+                <label>MANAGER_NAME <input id="MANAGER_NAME" type="text"></label>
+                <label>MANAGER_PHONE <input id="MANAGER_PHONE" type="text"></label>
+                <label>IO_DATE <input id="IO_DATE" type="text" placeholder="YYYY-MM-DD"></label>
+                <label>STATUS
+                    <select id="STATUS">
+                        <option value="DRAFT">임시저장(DRAFT)</option>
+                        <option value="ACTIVE">진행중(ACTIVE)</option>
+                        <option value="HOLD">보류(HOLD)</option>
+                        <option value="DONE">완료(DONE)</option>
+                    </select>
+                </label>
+                <label class="full-width">MEMO <textarea id="MEMO"></textarea></label>
+            </div>
+            <div class="modal-actions">
+                <button id="modalSaveBtn" type="button">등록</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.realgrid.com/latest/realgrid-lic.js"></script>
+<script src="https://cdn.realgrid.com/latest/realgrid.2.8.5.min.js"></script>
+<script src="../static/js/warehouse-io.js"></script>
+</body>
+</html>

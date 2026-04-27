@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>투자자 관리</title>
+    <link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+<div class="wrap">
+    <h1>투자자 관리 (Vanilla JS)</h1>
+    <div class="toolbar">
+        <input id="nameKeyword" placeholder="이름 검색">
+        <button id="searchBtn">조회</button>
+        <button id="createBtn">신규 등록</button>
+    </div>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th><th>이름</th><th>등급</th><th>총투자금</th><th>최근상품</th><th>메모</th>
+        </tr>
+        </thead>
+        <tbody id="rows"></tbody>
+    </table>
+</div>
+
+<div id="modal" class="modal hidden">
+    <div class="modal-box">
+        <h3>투자자 등록</h3>
+        <label>이름 <input id="investorName"></label>
+        <label>등급 <input id="investorGrade"></label>
+        <label>총투자금 <input id="totalAmount" type="number"></label>
+        <label>최근상품 <input id="lastProductName"></label>
+        <label>메모 <textarea id="screenMemo"></textarea></label>
+        <div class="actions">
+            <button id="saveBtn">등록</button>
+            <button id="closeBtn">닫기</button>
+        </div>
+    </div>
+</div>
+
+<script src="/js/investor.js"></script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>입출고 기능</title>
+    <link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+<div id="app" class="wrap">
+    <h1>입출고 기능 (Vue)</h1>
+    <div class="toolbar">
+        <button @click="loadRows">조회</button>
+        <button @click="openModal">신규 등록</button>
+    </div>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th><th>창고명</th><th>상품코드</th><th>상품명</th><th>입고</th><th>출고</th><th>재고</th><th>상태</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-if="rows.length === 0"><td colspan="8">데이터가 없습니다.</td></tr>
+        <tr v-for="item in rows" :key="item.warehouseIoId">
+            <td>{{ item.warehouseIoId }}</td>
+            <td>{{ item.warehouseName }}</td>
+            <td>{{ item.productCode }}</td>
+            <td>{{ item.productName }}</td>
+            <td>{{ item.inQty }}</td>
+            <td>{{ item.outQty }}</td>
+            <td>{{ item.currentStock }}</td>
+            <td>{{ item.status }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="modal" v-if="showModal">
+        <div class="modal-box">
+            <h3>입출고 등록</h3>
+            <label>창고명 <input v-model="form.warehouseName"></label>
+            <label>상품코드 <input v-model="form.productCode"></label>
+            <label>상품명 <input v-model="form.productName"></label>
+            <label>분류 <input v-model="form.productCategory"></label>
+            <label>입고수량 <input v-model.number="form.inQty" type="number"></label>
+            <label>출고수량 <input v-model.number="form.outQty" type="number"></label>
+            <label>현재재고 <input v-model.number="form.currentStock" type="number"></label>
+            <label>거래처 <input v-model="form.clientName"></label>
+            <label>상태 <input v-model="form.status"></label>
+            <div class="actions">
+                <button @click="createRow">등록</button>
+                <button @click="closeModal">닫기</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+<script src="/js/warehouse-vue.js"></script>
+</body>
+</html>

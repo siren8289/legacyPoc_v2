@@ -1,0 +1,39 @@
+package com.example.refactor.feature.investor.controller;
+
+// 투자자 기능 REST 엔드포인트를 제공하는 컨트롤러.
+import com.example.refactor.common.ApiResponse;
+import com.example.refactor.feature.investor.dto.CreateInvestorRequest;
+import com.example.refactor.feature.investor.model.Investor;
+import com.example.refactor.feature.investor.service.InvestorService;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
+
+@RestController
+@RequestMapping("/api/investors")
+public class InvestorController {
+    private final InvestorService service;
+
+    public InvestorController(InvestorService service) {
+        this.service = service;
+    }
+
+    @GetMapping
+    public ApiResponse<List<Investor>> list(@RequestParam(required = false) String name) {
+        // 투자자 목록 API: 바닐라 JS 화면에서 조회 시 호출한다.
+        return new ApiResponse<>(service.list(name));
+    }
+
+    @GetMapping("/{id}")
+    public ApiResponse<Investor> detail(@PathVariable Long id) {
+        return new ApiResponse<>(service.detail(id));
+    }
+
+    @PostMapping
+    public Map<String, Object> create(@RequestBody CreateInvestorRequest request) {
+        // 프론트에서 재조회 흐름에 쓸 수 있도록 생성 ID를 함께 반환한다.
+        Investor created = service.create(request);
+        return Map.of("result", "OK", "investorId", created.investorId());
+    }
+}

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>통합 대시보드 화면 (레거시 샘플)</title>
+    <link rel="stylesheet" href="../static/css/site.css">
+    <link rel="stylesheet" href="../static/css/dashboard.css">
+</head>
+<body>
+<div class="topbar">
+    <div class="brand">레거시 운영 포털</div>
+    <div class="topbar-meta">대시보드 / v0.9 레거시</div>
+</div>
+<div class="layout">
+    <aside class="sidebar">
+        <div class="sidebar-title">메인 메뉴</div>
+        <a class="menu-link" href="investor.html">투자자 관리</a>
+        <a class="menu-link" href="warehouse-io.html">입출고 처리</a>
+        <a class="menu-link" href="order-status.html">주문 현황</a>
+        <a class="menu-link" href="settlement.html">정산 관리</a>
+        <a class="menu-link active" href="dashboard.html">통합 대시보드</a>
+    </aside>
+    <main class="content">
+        <h1 class="page-title">통합 대시보드 화면</h1>
+        <p class="page-subtitle">화면별 데이터가 한 테이블에 몰린 레거시 통합 뷰</p>
+        <section class="kpi-row">
+            <div class="kpi-card"><div class="kpi-label">실시간 알림</div><div class="kpi-value">9</div></div>
+            <div class="kpi-card"><div class="kpi-label">미처리 작업</div><div class="kpi-value">21</div></div>
+            <div class="kpi-card"><div class="kpi-label">오늘 매출(백만)</div><div class="kpi-value">374</div></div>
+            <div class="kpi-card"><div class="kpi-label">시스템 경고</div><div class="kpi-value">2</div></div>
+        </section>
+        <section class="panel">
+            <h2 class="panel-title">통합 목록</h2>
+            <div class="search-panel">
+                <label for="searchName">통합검색</label>
+                <input type="text" id="searchName" placeholder="검색어">
+                <button id="searchBtn">조회</button>
+            </div>
+            <table id="dashboardTable">
+                <thead>
+                <tr>
+                    <th>코드</th>
+                    <th>이름</th>
+                    <th>구분</th>
+                    <th>금액</th>
+                    <th>최근항목</th>
+                    <th>메모</th>
+                </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </section>
+    </main>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="../static/js/common-table.js"></script>
+<script src="../static/js/dashboard.js"></script>
+</body>
+</html>

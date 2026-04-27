@@ -1,0 +1,19 @@
+-- Legacy denormalized screen table
+CREATE TABLE TB_WAREHOUSE_IO_SCREEN (
+    WAREHOUSE_IO_ID    BIGINT PRIMARY KEY AUTO_INCREMENT,
+    WAREHOUSE_NAME     VARCHAR(100),
+    PRODUCT_CODE       VARCHAR(40),
+    PRODUCT_NAME       VARCHAR(100),
+    PRODUCT_CATEGORY   VARCHAR(60),
+    IN_QTY             INT,
+    OUT_QTY            INT,
+    CURRENT_STOCK      INT,
+    CLIENT_NAME        VARCHAR(100),
+    MANAGER_NAME       VARCHAR(60),
+    MANAGER_PHONE      VARCHAR(30),
+    IO_DATE            VARCHAR(20),
+    STATUS             VARCHAR(30),
+    MEMO               VARCHAR(500),
+    DELETED_YN         CHAR(1),
+    UPDATED_AT         TIMESTAMP
+);

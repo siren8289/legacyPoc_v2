@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>투자자 화면 (레거시 샘플)</title>
+    <link rel="stylesheet" href="../static/css/site.css">
+    <link rel="stylesheet" href="../static/css/investor.css">
+</head>
+<body>
+<div class="topbar">
+    <div class="brand">레거시 운영 포털</div>
+    <div class="topbar-meta">투자자 / v0.9 레거시</div>
+</div>
+<div class="layout">
+    <aside class="sidebar">
+        <div class="sidebar-title">메인 메뉴</div>
+        <a class="menu-link active" href="investor.html">투자자 관리</a>
+        <a class="menu-link" href="warehouse-io.html">입출고 처리</a>
+        <a class="menu-link" href="order-status.html">주문 현황</a>
+        <a class="menu-link" href="settlement.html">정산 관리</a>
+        <a class="menu-link" href="dashboard.html">통합 대시보드</a>
+    </aside>
+    <main class="content">
+        <h1 class="page-title">투자자 관리 화면</h1>
+        <p class="page-subtitle">화면 단위 DTO와 테이블 데이터를 그대로 표시하는 레거시 화면</p>
+
+        <section class="kpi-row">
+            <div class="kpi-card"><div class="kpi-label">오늘 조회 건수</div><div class="kpi-value">128</div></div>
+            <div class="kpi-card"><div class="kpi-label">우수 투자자</div><div class="kpi-value">27</div></div>
+            <div class="kpi-card"><div class="kpi-label">총 투자금(억)</div><div class="kpi-value">512</div></div>
+            <div class="kpi-card"><div class="kpi-label">주의 대상</div><div class="kpi-value">5</div></div>
+        </section>
+
+        <section class="panel">
+            <h2 class="panel-title">투자자 목록</h2>
+            <div class="search-panel">
+                <label for="investorName">이름</label>
+                <input type="text" id="investorName" placeholder="홍길동">
+                <button id="createInvestorBtn" type="button">투자자 등록</button>
+                <button id="searchBtn">조회</button>
+            </div>
+            <table id="investorTable">
+                <thead>
+                <tr>
+                    <th>투자자ID</th>
+                    <th>이름</th>
+                    <th>등급</th>
+                    <th>총투자금</th>
+                    <th>최근상품</th>
+                    <th>화면메모</th>
+                </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </section>
+    </main>
+    </div>
+
+<div id="investorModal" class="legacy-modal" style="display:none;">
+    <div class="legacy-modal-box">
+        <div class="legacy-modal-header">
+            <h3>투자자 등록</h3>
+            <button id="closeInvestorModalBtn" type="button">X</button>
+        </div>
+        <div class="legacy-modal-body">
+            <div class="form-grid">
+                <label>이름 <input id="mInvestorName" type="text"></label>
+                <label>등급 <input id="mInvestorGrade" type="text" placeholder="VIP/GOLD/SILVER"></label>
+                <label>총투자금 <input id="mTotalAmount" type="number"></label>
+                <label>최근상품 <input id="mLastProductName" type="text"></label>
+                <label class="full-width">메모 <textarea id="mScreenMemo"></textarea></label>
+            </div>
+            <div class="modal-actions">
+                <button id="saveInvestorBtn" type="button">등록</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="../static/js/investor.js"></script>
+</body>
+</html>
