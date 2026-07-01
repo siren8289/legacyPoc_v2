@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>투자자 기능</title>
+    <link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+<div id="app" class="wrap">
+    <h1>투자자 기능 (Vue)</h1>
+    <div class="toolbar">
+        <input v-model="keyword" placeholder="이름 검색">
+        <button @click="loadRows">조회</button>
+        <button @click="openModal">신규 등록</button>
+    </div>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th><th>이름</th><th>등급</th><th>총투자금</th><th>최근상품</th><th>메모</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-if="rows.length === 0"><td colspan="6">데이터가 없습니다.</td></tr>
+        <tr v-for="item in rows" :key="item.investorId">
+            <td>{{ item.investorId }}</td>
+            <td>{{ item.investorName }}</td>
+            <td>{{ item.investorGrade }}</td>
+            <td>{{ item.totalAmount }}</td>
+            <td>{{ item.lastProductName }}</td>
+            <td>{{ item.screenMemo }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="modal" v-if="showModal">
+        <div class="modal-box">
+            <h3>투자자 등록</h3>
+            <label>이름 <input v-model="form.investorName"></label>
+            <label>등급 <input v-model="form.investorGrade"></label>
+            <label>총투자금 <input v-model.number="form.totalAmount" type="number"></label>
+            <label>최근상품 <input v-model="form.lastProductName"></label>
+            <label>메모 <textarea v-model="form.screenMemo"></textarea></label>
+            <div class="actions">
+                <button @click="createRow">등록</button>
+                <button @click="closeModal">닫기</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+<script src="/js/investor-vue.js"></script>
+</body>
+</html>

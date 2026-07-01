@@ -1,0 +1,11 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: springboot-api-nextjs
+  datasource:
+    url: jdbc:postgresql://localhost:5432/legacy_next_refactor
+    username: legacy_user
+    password: legacy_pass
+    driver-class-name: org.postgresql.Driver

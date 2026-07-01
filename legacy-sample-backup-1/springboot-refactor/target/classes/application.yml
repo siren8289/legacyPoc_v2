@@ -1,0 +1,11 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: springboot-refactor
+  datasource:
+    url: jdbc:mariadb://localhost:3306/legacy_refactor
+    username: legacy_user
+    password: legacy_pass
+    driver-class-name: org.mariadb.jdbc.Driver
