@@ -1,6 +1,10 @@
 server:
   port: 8083
 
+app:
+  repository:
+    type: memory
+
 spring:
   application:
     name: springboot-api-nextjs

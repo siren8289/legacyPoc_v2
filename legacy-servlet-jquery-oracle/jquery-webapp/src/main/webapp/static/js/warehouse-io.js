@@ -231,12 +231,60 @@ function updateField(action, key, value) {
         method: "GET",
         data: payload,
         success: function () {
-            loadList();
+            patchGridRow(id, key, value);
         },
         error: function () {
             alert("필드 저장 실패: " + action);
         }
     });
+}
+
+var GRID_FIELD_COLUMN_INDEX = {
+    warehouseName: 1,
+    productCode: 2,
+    productName: 3,
+    productCategory: 4,
+    inQty: 5,
+    outQty: 6,
+    currentStock: 7,
+    clientName: 8,
+    status: 9
+};
+
+var NUMERIC_GRID_FIELDS = { inQty: true, outQty: true, currentStock: true };
+
+function patchGridRow(id, fieldKey, value) {
+    if (!GRID_FIELD_COLUMN_INDEX.hasOwnProperty(fieldKey)) {
+        return;
+    }
+
+    if (isFallbackMode) {
+        patchFallbackRow(id, fieldKey, value);
+        return;
+    }
+
+    if (!dataProvider) {
+        return;
+    }
+
+    var parsed = NUMERIC_GRID_FIELDS[fieldKey] ? (parseInt(value, 10) || 0) : value;
+    var rowCount = dataProvider.getRowCount();
+    for (var i = 0; i < rowCount; i++) {
+        var rowId = dataProvider.getValue(i, "warehouseIoId");
+        if (String(rowId) === String(id)) {
+            dataProvider.setValue(i, fieldKey, parsed);
+            break;
+        }
+    }
+}
+
+function patchFallbackRow(id, fieldKey, value) {
+    var colIndex = GRID_FIELD_COLUMN_INDEX[fieldKey];
+    var $row = $("#ioFallbackTable tr[data-id='" + id + "']");
+    if (!$row.length) {
+        return;
+    }
+    $row.find("td").eq(colIndex).text(value);
 }
 
 function deleteRow(id) {

@@ -14,6 +14,7 @@ import java.util.Map;
 public class InvestorDao {
 
     private static final Map<Long, InvestorDto> INVESTOR_TABLE = new LinkedHashMap<>();
+    private static final InvestorSearchIndex NAME_INDEX = new InvestorSearchIndex();
     private static long INVESTOR_SEQ = 2000L;
 
     static {
@@ -24,8 +25,25 @@ public class InvestorDao {
 
     public List<InvestorDto> list(String keyword) {
         String q = keyword == null ? "" : keyword.trim();
+        List<Long> candidates = NAME_INDEX.candidateIds(keyword);
         List<InvestorDto> rows = new ArrayList<>();
-        for (InvestorDto dto : INVESTOR_TABLE.values()) {
+
+        if (candidates == null) {
+            for (InvestorDto dto : INVESTOR_TABLE.values()) {
+                rows.add(cloneDto(dto));
+            }
+            return rows;
+        }
+
+        Iterable<Long> idsToScan = candidates.isEmpty()
+                ? INVESTOR_TABLE.keySet()
+                : candidates;
+
+        for (Long id : idsToScan) {
+            InvestorDto dto = INVESTOR_TABLE.get(id);
+            if (dto == null) {
+                continue;
+            }
             if (q.isEmpty() || safe(dto.getInvestorName()).contains(q)) {
                 rows.add(cloneDto(dto));
             }
@@ -47,6 +65,7 @@ public class InvestorDao {
         dto.setLastProductName(safe(lastProductName));
         dto.setScreenMemo(safe(screenMemo));
         INVESTOR_TABLE.put(dto.getInvestorId(), dto);
+        NAME_INDEX.register(dto.getInvestorId(), dto.getInvestorName());
         return dto.getInvestorId();
     }
 
@@ -59,6 +78,7 @@ public class InvestorDao {
         dto.setLastProductName(product);
         dto.setScreenMemo(memo);
         INVESTOR_TABLE.put(dto.getInvestorId(), dto);
+        NAME_INDEX.register(dto.getInvestorId(), name);
     }
 
     private static synchronized long nextId() {

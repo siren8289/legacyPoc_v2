@@ -1,53 +1,21 @@
 package com.example.refactor.feature.investor.repository;
 
-// application.yml에 DB가 설정되어 있으나 데모용으로 메모리 저장소를 사용한다.
+import com.example.refactor.common.PageResult;
 import com.example.refactor.feature.investor.model.Investor;
-import org.springframework.stereotype.Repository;
+import com.example.refactor.feature.investor.model.InvestorListItem;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicLong;
+import java.util.Optional;
 
-@Repository
-public class InvestorRepository {
-    private final Map<Long, Investor> table = new LinkedHashMap<>();
-    private final AtomicLong sequence = new AtomicLong(2000);
+public interface InvestorRepository {
 
-    public InvestorRepository() {
-        save(new Investor(null, "김민수", "VIP", 850000000L, "글로벌인컴펀드", "최근 요청: 월간 리포트 이메일 발송"));
-        save(new Investor(null, "이서연", "GOLD", 320000000L, "국내배당주랩", "최근 문의: 수익률 변동 사유"));
-        save(new Investor(null, "박준호", "SILVER", 120000000L, "안정형채권플랜", "만기 도래 예정 상품 설명 필요"));
-    }
+    Investor save(Investor investor);
 
-    public List<Investor> findAll(String keyword) {
-        // 레거시와 동일하게 SQL WHERE 대신 Java에서 이름 부분 일치 검색한다.
-        String q = keyword == null ? "" : keyword.trim();
-        List<Investor> rows = new ArrayList<>();
-        for (Investor investor : table.values()) {
-            if (q.isEmpty() || investor.investorName().contains(q)) {
-                rows.add(investor);
-            }
-        }
-        return rows;
-    }
+    Optional<Investor> findById(Long id);
 
-    public Investor findById(Long id) {
-        return table.get(id);
-    }
+    List<Investor> findAll(String keyword);
 
-    public Investor save(Investor investor) {
-        Long id = investor.investorId() == null ? sequence.incrementAndGet() : investor.investorId();
-        Investor saved = new Investor(
-                id,
-                investor.investorName(),
-                investor.investorGrade(),
-                investor.totalAmount(),
-                investor.lastProductName(),
-                investor.screenMemo()
-        );
-        table.put(id, saved);
-        return saved;
-    }
+    PageResult<InvestorListItem> findPage(String keyword, int page, int size);
+
+    void deleteById(Long id);
 }

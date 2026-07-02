@@ -20,7 +20,12 @@ public class WarehouseController {
     }
 
     @GetMapping
-    public ApiResponse<List<WarehouseIo>> list() {
+    public ApiResponse<?> list(
+            @RequestParam(required = false) Integer page,
+            @RequestParam(required = false) Integer size) {
+        if (page != null && size != null) {
+            return new ApiResponse<>(service.listPage(page, size));
+        }
         return new ApiResponse<>(service.list());
     }
 

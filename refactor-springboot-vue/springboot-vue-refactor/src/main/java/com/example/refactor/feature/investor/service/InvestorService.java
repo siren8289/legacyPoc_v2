@@ -1,8 +1,10 @@
 package com.example.refactor.feature.investor.service;
 
 // 서비스 계층 — 입력 정규화·기본값 처리 후 저장소에 위임한다.
+import com.example.refactor.common.PageResult;
 import com.example.refactor.feature.investor.dto.CreateInvestorRequest;
 import com.example.refactor.feature.investor.model.Investor;
+import com.example.refactor.feature.investor.model.InvestorListItem;
 import com.example.refactor.feature.investor.repository.InvestorRepository;
 import org.springframework.stereotype.Service;
 
@@ -20,8 +22,12 @@ public class InvestorService {
         return repository.findAll(name);
     }
 
+    public PageResult<InvestorListItem> listPage(String name, int page, int size) {
+        return repository.findPage(name, page, size);
+    }
+
     public Investor detail(Long id) {
-        return repository.findById(id);
+        return repository.findById(id).orElse(null);
     }
 
     public Investor create(CreateInvestorRequest request) {

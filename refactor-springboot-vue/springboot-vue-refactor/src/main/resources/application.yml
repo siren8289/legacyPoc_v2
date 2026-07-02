@@ -1,6 +1,10 @@
 server:
   port: 8082
 
+app:
+  repository:
+    type: memory
+
 spring:
   application:
     name: springboot-vue-refactor

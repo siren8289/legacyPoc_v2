@@ -20,8 +20,13 @@ public class InvestorController {
     }
 
     @GetMapping
-    public ApiResponse<List<Investor>> list(@RequestParam(required = false) String name) {
-        // Vue 투자자 화면에서 키워드 검색 시 호출한다.
+    public ApiResponse<?> list(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) Integer page,
+            @RequestParam(required = false) Integer size) {
+        if (page != null && size != null) {
+            return new ApiResponse<>(service.listPage(name, page, size));
+        }
         return new ApiResponse<>(service.list(name));
     }
 
@@ -32,7 +37,7 @@ public class InvestorController {
 
     @PostMapping
     public Map<String, Object> create(@RequestBody CreateInvestorRequest request) {
-        // Vue 폼 제출 처리에 필요한 최소 응답만 반환한다.
+        // 프론트에서 재조회 흐름에 쓸 수 있도록 생성 ID를 함께 반환한다.
         Investor created = service.create(request);
         return Map.of("result", "OK", "investorId", created.investorId());
     }

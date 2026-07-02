@@ -1,6 +1,10 @@
 server:
   port: 8081
 
+app:
+  repository:
+    type: memory
+
 spring:
   application:
     name: springboot-refactor

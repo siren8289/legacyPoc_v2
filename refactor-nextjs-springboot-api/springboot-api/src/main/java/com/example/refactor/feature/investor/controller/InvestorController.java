@@ -20,8 +20,13 @@ public class InvestorController {
     }
 
     @GetMapping
-    public ApiResponse<List<Investor>> list(@RequestParam(required = false) String name) {
-        // 투자자 목록 조회 엔드포인트(이름 키워드 선택적 필터 지원).
+    public ApiResponse<?> list(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) Integer page,
+            @RequestParam(required = false) Integer size) {
+        if (page != null && size != null) {
+            return new ApiResponse<>(service.listPage(name, page, size));
+        }
         return new ApiResponse<>(service.list(name));
     }
 
@@ -32,7 +37,7 @@ public class InvestorController {
 
     @PostMapping
     public Map<String, Object> create(@RequestBody CreateInvestorRequest request) {
-        // 프론트 폼 처리 단순화를 위해 결과와 생성 ID만 반환한다.
+        // 프론트에서 재조회 흐름에 쓸 수 있도록 생성 ID를 함께 반환한다.
         Investor created = service.create(request);
         return Map.of("result", "OK", "investorId", created.investorId());
     }

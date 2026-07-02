@@ -20,8 +20,12 @@ public class WarehouseController {
     }
 
     @GetMapping
-    public ApiResponse<List<WarehouseIo>> list() {
-        // 입출고 목록 화면에서 테이블 렌더링을 위해 호출한다.
+    public ApiResponse<?> list(
+            @RequestParam(required = false) Integer page,
+            @RequestParam(required = false) Integer size) {
+        if (page != null && size != null) {
+            return new ApiResponse<>(service.listPage(page, size));
+        }
         return new ApiResponse<>(service.list());
     }
 
@@ -32,7 +36,6 @@ public class WarehouseController {
 
     @PostMapping
     public Map<String, Object> create(@RequestBody CreateWarehouseRequest request) {
-        // 프론트 "신규 등록" 폼에서 호출하는 생성 API.
         WarehouseIo created = service.create(request);
         return Map.of("result", "OK", "warehouseIoId", created.warehouseIoId());
     }

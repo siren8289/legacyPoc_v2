@@ -20,8 +20,13 @@ public class InvestorController {
     }
 
     @GetMapping
-    public ApiResponse<List<Investor>> list(@RequestParam(required = false) String name) {
-        // 투자자 목록 API: 바닐라 JS 화면에서 조회 시 호출한다.
+    public ApiResponse<?> list(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) Integer page,
+            @RequestParam(required = false) Integer size) {
+        if (page != null && size != null) {
+            return new ApiResponse<>(service.listPage(name, page, size));
+        }
         return new ApiResponse<>(service.list(name));
     }
 

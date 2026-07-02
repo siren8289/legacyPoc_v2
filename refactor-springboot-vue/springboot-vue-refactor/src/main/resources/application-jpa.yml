@@ -1,0 +1,13 @@
+app:
+  repository:
+    type: jpa
+
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: false
+    open-in-view: false
+  sql:
+    init:
+      mode: never
