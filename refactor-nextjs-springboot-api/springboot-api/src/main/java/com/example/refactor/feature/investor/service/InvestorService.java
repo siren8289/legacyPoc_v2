@@ -1,6 +1,5 @@
 package com.example.refactor.feature.investor.service;
 
-// 저장 전 기본값 처리와 검증을 담당하는 투자자 서비스 계층.
 import com.example.refactor.feature.investor.dto.CreateInvestorRequest;
 import com.example.refactor.feature.investor.model.Investor;
 import com.example.refactor.feature.investor.repository.InvestorRepository;

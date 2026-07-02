@@ -1,6 +1,5 @@
 package com.example.refactor.feature.investor.controller;
 
-// 뷰 화면에서 호출하는 투자자 엔드포인트 컨트롤러.
 import com.example.refactor.common.ApiResponse;
 import com.example.refactor.feature.investor.dto.CreateInvestorRequest;
 import com.example.refactor.feature.investor.model.Investor;

@@ -1,6 +1,6 @@
 package com.example.refactor.feature.warehouse.repository;
 
-// 빠른 데모와 리팩토링 비교를 위한 메모리 입출고 저장소.
+// application.yml에 DB가 설정되어 있으나 데모용으로 메모리 저장소를 사용한다.
 import com.example.refactor.feature.warehouse.model.WarehouseIo;
 import org.springframework.stereotype.Repository;
 

@@ -1,6 +1,6 @@
 package com.example.refactor.feature.investor.repository;
 
-// 외부 DB 없이 샘플을 실행할 수 있도록 메모리 저장소를 사용한다.
+// application.yml에 DB가 설정되어 있으나 데모용으로 메모리 저장소를 사용한다.
 import com.example.refactor.feature.investor.model.Investor;
 import org.springframework.stereotype.Repository;
 

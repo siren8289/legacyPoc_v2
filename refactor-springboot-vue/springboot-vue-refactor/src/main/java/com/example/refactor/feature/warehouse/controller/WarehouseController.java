@@ -1,6 +1,5 @@
 package com.example.refactor.feature.warehouse.controller;
 
-// 뷰 입출고 화면에서 호출하는 엔드포인트 컨트롤러.
 import com.example.refactor.common.ApiResponse;
 import com.example.refactor.feature.warehouse.dto.CreateWarehouseRequest;
 import com.example.refactor.feature.warehouse.model.WarehouseIo;

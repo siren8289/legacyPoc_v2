@@ -1,6 +1,5 @@
 package com.example.refactor.feature.investor.controller;
 
-// 투자자 기능 REST 엔드포인트를 제공하는 컨트롤러.
 import com.example.refactor.common.ApiResponse;
 import com.example.refactor.feature.investor.dto.CreateInvestorRequest;
 import com.example.refactor.feature.investor.model.Investor;

@@ -1,6 +1,5 @@
 package com.example.refactor.feature.warehouse.dto;
 
-// 입출고 행 신규 등록 요청 바디 모델.
 public record CreateWarehouseRequest(
         String warehouseName,
         String productCode,

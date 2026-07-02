@@ -1,6 +1,5 @@
 package com.example.refactor.feature.warehouse.model;
 
-// 입출고 행 데이터를 표현하는 도메인 모델.
 public record WarehouseIo(
         Long warehouseIoId,
         String warehouseName,

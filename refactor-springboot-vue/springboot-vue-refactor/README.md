@@ -1,10 +1,15 @@
 # Spring Boot + Vue Refactor Version
 
-`legacy-sample-backup-2`의 리팩토링 버전입니다.
+`legacy-servlet-jquery-oracle`의 2단계 리팩토링 버전입니다.
+
+## 기술 스택
+
+- 백엔드: Spring Boot 3 + REST API
+- 프론트: Vue 3 (CDN 전역 빌드)
 
 ## 목표
 
-- 프론트엔드: Vue 3(Composition API 대신 CDN 전역 빌드 기반) 적용
+- 프론트엔드: Vue 3 적용
 - 백엔드: Spring Boot REST API
 - 구조: 기능별 패키지 분리
   - `feature/investor/{controller,service,repository,model,dto}`
@@ -13,7 +18,7 @@
 ## 실행
 
 ```bash
-cd springboot-vue-refactor
+cd refactor-springboot-vue/springboot-vue-refactor
 mvn spring-boot:run
 ```
 

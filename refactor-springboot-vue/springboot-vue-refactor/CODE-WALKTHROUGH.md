@@ -1,8 +1,8 @@
-# CODE WALKTHROUGH (backup-2: Vue + Spring Boot)
+# CODE WALKTHROUGH (Spring Boot + Vue)
 
 ## 작업 방식
 
-1. 백엔드는 backup-1과 동일하게 기능별 Spring Boot 구조를 사용했습니다.
+1. 백엔드는 1단계 리팩토링과 동일하게 기능별 Spring Boot 구조를 사용했습니다.
 2. 프론트는 Vue 3(CDN)로 상태/렌더링을 컴포넌트 방식으로 단순화했습니다.
 3. 기능별 페이지를 분리해 투자자와 입출고를 독립적으로 개발 가능하게 했습니다.
 

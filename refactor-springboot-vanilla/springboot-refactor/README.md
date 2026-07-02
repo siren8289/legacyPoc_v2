@@ -1,6 +1,11 @@
 # Spring Boot Refactor Version
 
-`legacy-sample-backup-1`의 리팩토링 버전입니다.
+`legacy-servlet-jquery-oracle`의 1단계 리팩토링 버전입니다.
+
+## 기술 스택
+
+- 백엔드: Spring Boot 3 + REST API
+- 프론트: Vanilla JavaScript (`fetch`)
 
 ## 목표
 
@@ -13,7 +18,7 @@
 ## 실행
 
 ```bash
-cd springboot-refactor
+cd refactor-springboot-vanilla/springboot-refactor
 mvn spring-boot:run
 ```
 

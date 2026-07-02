@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 public class InvestorDao {
-    // 이 샘플의 투자자 화면에서 사용하는 메모리 테이블.
+
     private static final Map<Long, InvestorDto> INVESTOR_TABLE = new LinkedHashMap<>();
     private static long INVESTOR_SEQ = 2000L;
 
@@ -19,7 +19,6 @@ public class InvestorDao {
     }
 
     public List<InvestorDto> list(String keyword) {
-        // 이름 필터링을 DAO에서 직접 처리한다(단순/레거시 방식).
         String q = keyword == null ? "" : keyword.trim();
         List<InvestorDto> rows = new ArrayList<>();
         for (InvestorDto dto : INVESTOR_TABLE.values()) {
@@ -31,13 +30,11 @@ public class InvestorDao {
     }
 
     public InvestorDto detail(long investorId) {
-        // 투자자 목록 행 클릭 시 상세조회에 사용된다.
         InvestorDto dto = INVESTOR_TABLE.get(investorId);
         return dto == null ? null : cloneDto(dto);
     }
 
     public long create(String investorName, String investorGrade, long totalAmount, String lastProductName, String screenMemo) {
-        // 모달 "등록" 버튼에서 호출하는 생성 로직.
         InvestorDto dto = new InvestorDto();
         dto.setInvestorId(nextId());
         dto.setInvestorName(safe(investorName));
@@ -66,7 +63,6 @@ public class InvestorDao {
     }
 
     private InvestorDto cloneDto(InvestorDto src) {
-        // 저장소 원본 보호를 위해 복사본을 반환한다.
         InvestorDto dto = new InvestorDto();
         dto.setInvestorId(src.getInvestorId());
         dto.setInvestorName(src.getInvestorName());

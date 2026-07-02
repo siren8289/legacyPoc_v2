@@ -8,16 +8,16 @@
 
 ## 핵심 파일 설명
 
-- `back/src/main/java/com/example/legacy/servlet/WarehouseIoServlet.java`
+- `servlet-jdbc-backend/src/main/java/com/example/legacy/servlet/WarehouseIoServlet.java`
   - `action` 값으로 모든 동작을 분기합니다.
   - `list/detail/createEmptyRow/update.../delete`를 한 클래스에서 처리합니다.
-- `back/src/main/java/com/example/legacy/dao/WarehouseIoDao.java`
+- `servlet-jdbc-backend/src/main/java/com/example/legacy/dao/WarehouseIoDao.java`
   - 컬럼별 update 메서드가 다수 존재합니다.
   - JDBC 시도 후 실패하면 메모리 fallback으로 동작합니다.
-- `front/src/main/webapp/static/js/warehouse-io.js`
+- `jquery-webapp/src/main/webapp/static/js/warehouse-io.js`
   - 조회/등록/상세/수정/삭제를 하나의 JS 파일에서 직접 제어합니다.
   - 필드 change 시 즉시 API 호출로 저장합니다.
-- `front/src/main/webapp/static/js/investor.js`
+- `jquery-webapp/src/main/webapp/static/js/investor.js`
   - 투자자 목록/상세/등록을 직접 렌더링 방식으로 처리합니다.
 
 ## 왜 이렇게 구성했는가

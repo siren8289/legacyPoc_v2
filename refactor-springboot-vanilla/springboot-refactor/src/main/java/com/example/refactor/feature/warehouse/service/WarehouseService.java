@@ -1,6 +1,5 @@
 package com.example.refactor.feature.warehouse.service;
 
-// 입출고 기능의 비즈니스 흐름을 조정하는 서비스 계층.
 import com.example.refactor.feature.warehouse.dto.CreateWarehouseRequest;
 import com.example.refactor.feature.warehouse.model.WarehouseIo;
 import com.example.refactor.feature.warehouse.repository.WarehouseRepository;

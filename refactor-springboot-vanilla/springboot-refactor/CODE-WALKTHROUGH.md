@@ -1,4 +1,4 @@
-# CODE WALKTHROUGH (backup-1: Vanilla + Spring Boot)
+# CODE WALKTHROUGH (Spring Boot + Vanilla JS)
 
 ## 작업 방식
 

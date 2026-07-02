@@ -1,6 +1,5 @@
 package com.example.refactor.feature.warehouse.controller;
 
-// 입출고 기능 REST 엔드포인트를 제공하는 컨트롤러.
 import com.example.refactor.common.ApiResponse;
 import com.example.refactor.feature.warehouse.dto.CreateWarehouseRequest;
 import com.example.refactor.feature.warehouse.model.WarehouseIo;
