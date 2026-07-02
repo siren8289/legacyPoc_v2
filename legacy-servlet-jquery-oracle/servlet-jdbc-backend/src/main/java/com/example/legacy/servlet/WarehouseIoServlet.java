@@ -11,6 +11,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+/**
+ * 입출고 action API 서블릿.
+ * 서비스 계층 없이 DAO를 직접 호출하며, 쿼리 파라미터 action으로 동작을 분기한다.
+ */
 public class WarehouseIoServlet extends HttpServlet {
 
     private final WarehouseIoDao warehouseIoDao = new WarehouseIoDao();
@@ -39,6 +43,7 @@ public class WarehouseIoServlet extends HttpServlet {
         return handler.apply(params);
     }
 
+    // action 이름 → 핸들러 매핑. 프론트 warehouse-io.js의 API 호출과 1:1 대응한다.
     private Map<String, Function<Map<String, String>, String>> buildActions() {
         Map<String, Function<Map<String, String>, String>> map = new HashMap<>();
         map.put("list", p -> LegacyJsonWriter.warehouseList(warehouseIoDao.list()));

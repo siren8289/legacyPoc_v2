@@ -1,5 +1,6 @@
 package com.example.refactor.feature.warehouse.service;
 
+// 서비스 계층 — 입력 정규화·기본값 처리 후 저장소에 위임한다.
 import com.example.refactor.feature.warehouse.dto.CreateWarehouseRequest;
 import com.example.refactor.feature.warehouse.model.WarehouseIo;
 import com.example.refactor.feature.warehouse.repository.WarehouseRepository;
@@ -24,6 +25,7 @@ public class WarehouseService {
     }
 
     public WarehouseIo create(CreateWarehouseRequest request) {
+        // 레거시의 createEmptyRow + 필드별 update 흐름을 단일 POST로 대체한다.
         WarehouseIo row = new WarehouseIo(
                 null,
                 safe(request.warehouseName()),

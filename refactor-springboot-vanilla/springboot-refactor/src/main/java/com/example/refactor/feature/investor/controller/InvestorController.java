@@ -1,5 +1,6 @@
 package com.example.refactor.feature.investor.controller;
 
+// REST 컨트롤러 — 레거시 action 파라미터를 HTTP 메서드/경로로 대체한다.
 import com.example.refactor.common.ApiResponse;
 import com.example.refactor.feature.investor.dto.CreateInvestorRequest;
 import com.example.refactor.feature.investor.model.Investor;

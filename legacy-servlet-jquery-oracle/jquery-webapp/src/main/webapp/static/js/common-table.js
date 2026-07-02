@@ -1,5 +1,7 @@
 // 공통 컬럼/렌더링 모델을 재사용하는 화면용 테이블 유틸리티.
+// order-status, settlement, dashboard 화면이 동일한 columns 정의를 공유한다.
 window.LegacyGrid = (function () {
+    // TB_WAREHOUSE_IO_SCREEN 기준 공통 표시 컬럼
     var columns = [
         { key: "warehouseIoId", label: "WAREHOUSE_IO_ID" },
         { key: "warehouseName", label: "WAREHOUSE_NAME" },

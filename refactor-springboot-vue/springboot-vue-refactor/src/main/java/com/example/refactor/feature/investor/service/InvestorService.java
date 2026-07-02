@@ -1,5 +1,6 @@
 package com.example.refactor.feature.investor.service;
 
+// 서비스 계층 — 입력 정규화·기본값 처리 후 저장소에 위임한다.
 import com.example.refactor.feature.investor.dto.CreateInvestorRequest;
 import com.example.refactor.feature.investor.model.Investor;
 import com.example.refactor.feature.investor.repository.InvestorRepository;

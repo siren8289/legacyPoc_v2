@@ -1,5 +1,6 @@
 "use client";
 
+// 입출고 기능 페이지 — 레거시 필드별 update 대신 일괄 POST 등록을 사용한다.
 import { useEffect, useState } from "react";
 import { apiGet, apiPost } from "@/src/lib/api";
 

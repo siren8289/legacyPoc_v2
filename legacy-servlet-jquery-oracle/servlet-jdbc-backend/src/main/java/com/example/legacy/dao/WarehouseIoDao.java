@@ -12,6 +12,11 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 입출고 화면 전용 DAO.
+ * TB_WAREHOUSE_IO_SCREEN 비정규화 테이블에 직접 JDBC로 접근하며,
+ * DB 연결 실패 시 메모리 저장소로 자동 전환한다.
+ */
 public class WarehouseIoDao {
 
     private static final String TABLE = "TB_WAREHOUSE_IO_SCREEN";
@@ -23,6 +28,7 @@ public class WarehouseIoDao {
             "SELECT " + SELECT_COLUMNS + " FROM " + TABLE + " WHERE DELETED_YN = 'N' ORDER BY WAREHOUSE_IO_ID DESC";
     private static final String SQL_DETAIL =
             "SELECT " + SELECT_COLUMNS + " FROM " + TABLE + " WHERE WAREHOUSE_IO_ID = ?";
+    // 레거시 등록 흐름: 빈 행을 먼저 INSERT하고 이후 필드별 UPDATE로 채운다.
     private static final String SQL_INSERT_EMPTY =
             "INSERT INTO " + TABLE + " ("
                     + "WAREHOUSE_NAME, PRODUCT_CODE, PRODUCT_NAME, PRODUCT_CATEGORY, IN_QTY, OUT_QTY, CURRENT_STOCK, "
@@ -90,6 +96,7 @@ public class WarehouseIoDao {
         }
     }
 
+    // 아래 public update* 메서드는 프론트 필드 change 이벤트와 1:1 대응한다.
     public int updateWarehouseName(long id, String value) { return updateColumn(id, WarehouseIoColumn.WAREHOUSE_NAME, value); }
     public int updateProductCode(long id, String value) { return updateColumn(id, WarehouseIoColumn.PRODUCT_CODE, value); }
     public int updateProductName(long id, String value) { return updateColumn(id, WarehouseIoColumn.PRODUCT_NAME, value); }
@@ -119,6 +126,7 @@ public class WarehouseIoDao {
         }
     }
 
+    // WarehouseIoColumn enum으로 허용 컬럼만 UPDATE하여 SQL 인젝션 위험을 줄인다.
     private int updateColumn(long id, WarehouseIoColumn column, Object value) {
         String sql = "UPDATE " + TABLE + " SET " + column.sqlName() + " = ?, UPDATED_AT = CURRENT_TIMESTAMP WHERE WAREHOUSE_IO_ID = ?";
         try (Connection conn = dbConnection.getConnection();
@@ -197,6 +205,7 @@ public class WarehouseIoDao {
         return dto;
     }
 
+    // 메모리 원본이 외부에서 변경되지 않도록 복사본을 반환한다.
     private WarehouseIoDto cloneDto(WarehouseIoDto src) {
         WarehouseIoDto dto = new WarehouseIoDto();
         dto.setWarehouseIoId(src.getWarehouseIoId());

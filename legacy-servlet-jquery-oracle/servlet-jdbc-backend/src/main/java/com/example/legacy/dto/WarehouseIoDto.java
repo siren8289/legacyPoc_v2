@@ -1,5 +1,6 @@
 package com.example.legacy.dto;
 
+/** TB_WAREHOUSE_IO_SCREEN 테이블과 1:1 매핑되는 화면 전용 DTO. */
 public class WarehouseIoDto {
     private long warehouseIoId;
     private String warehouseName;

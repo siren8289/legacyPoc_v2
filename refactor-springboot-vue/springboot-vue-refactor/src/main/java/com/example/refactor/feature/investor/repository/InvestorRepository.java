@@ -22,6 +22,7 @@ public class InvestorRepository {
     }
 
     public List<Investor> findAll(String keyword) {
+        // 레거시와 동일하게 SQL WHERE 대신 Java에서 이름 부분 일치 검색한다.
         String q = keyword == null ? "" : keyword.trim();
         List<Investor> rows = new ArrayList<>();
         for (Investor investor : table.values()) {

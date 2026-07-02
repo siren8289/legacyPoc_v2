@@ -7,6 +7,10 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 투자자 DAO.
+ * JDBC 없이 메모리 Map으로 동작하며, 이름 검색은 SQL이 아닌 Java에서 필터링한다.
+ */
 public class InvestorDao {
 
     private static final Map<Long, InvestorDto> INVESTOR_TABLE = new LinkedHashMap<>();

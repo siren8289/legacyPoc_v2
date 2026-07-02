@@ -7,6 +7,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+/**
+ * 투자자 action API 처리기.
+ * /investor?action=list|detail|create 형태로 호출된다.
+ */
 public class InvestorServlet {
 
     private final InvestorDao investorDao = new InvestorDao();

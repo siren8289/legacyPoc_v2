@@ -2,6 +2,10 @@ package com.example.legacy.dao;
 
 import com.example.legacy.dto.WarehouseIoDto;
 
+/**
+ * 입출고 화면 컬럼 enum.
+ * UPDATE 시 허용 컬럼을 화이트리스트로 제한하고, 메모리 fallback 시 DTO 반영에도 사용한다.
+ */
 enum WarehouseIoColumn {
     WAREHOUSE_NAME {
         @Override void apply(WarehouseIoDto dto, Object value) { dto.setWarehouseName((String) value); }

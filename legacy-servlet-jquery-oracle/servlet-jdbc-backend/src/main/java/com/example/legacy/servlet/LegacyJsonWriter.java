@@ -5,6 +5,10 @@ import com.example.legacy.dto.WarehouseIoDto;
 
 import java.util.List;
 
+/**
+ * 레거시 수동 JSON 직렬화 유틸.
+ * Jackson 등 라이브러리 없이 문자열 조합으로 응답을 생성한다.
+ */
 final class LegacyJsonWriter {
 
     private LegacyJsonWriter() {
@@ -72,6 +76,7 @@ final class LegacyJsonWriter {
         return "{\"result\":\"OK\",\"updated\":" + updated + "}";
     }
 
+    // 수동 JSON 생성 시 최소한의 이스케이프 처리
     private static String escape(String value) {
         if (value == null) {
             return "";

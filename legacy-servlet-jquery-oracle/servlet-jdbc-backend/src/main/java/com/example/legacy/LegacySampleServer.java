@@ -17,6 +17,10 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 레거시 샘플 통합 서버.
+ * WAS 없이 com.sun.net.httpserver로 API와 jQuery 정적 파일을 한 프로세스에서 제공한다.
+ */
 public class LegacySampleServer {
 
     private static final int PORT = 8080;
@@ -27,12 +31,14 @@ public class LegacySampleServer {
         WarehouseIoServlet servlet = new WarehouseIoServlet();
         InvestorServlet investorServlet = new InvestorServlet();
 
+        // 입출고 action API: /warehouse?action=list|detail|createEmptyRow|update*|delete
         server.createContext("/warehouse", exchange -> {
             Map<String, String> params = parseQuery(exchange.getRequestURI());
             String body = servlet.processAction(params.get("action"), params);
             send(exchange, 200, "application/json; charset=UTF-8", body);
         });
 
+        // 주문/정산/대시보드 화면 호환용 목록 API (warehouse list 재사용)
         server.createContext("/api/warehouse-io", exchange -> {
             Map<String, String> params = parseQuery(exchange.getRequestURI());
             params.put("action", "list");
@@ -40,6 +46,7 @@ public class LegacySampleServer {
             send(exchange, 200, "application/json; charset=UTF-8", body);
         });
 
+        // 투자자 action API: /investor?action=list|detail|create
         server.createContext("/investor", exchange -> {
             Map<String, String> params = parseQuery(exchange.getRequestURI());
             String body = investorServlet.processAction(params.get("action"), params);

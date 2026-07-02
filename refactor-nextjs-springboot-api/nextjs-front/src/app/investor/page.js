@@ -1,5 +1,6 @@
 "use client";
 
+// 투자자 기능 페이지 — Spring Boot API(/api/investors)와 연동한다.
 import { useEffect, useState } from "react";
 import { apiGet, apiPost } from "@/src/lib/api";
 

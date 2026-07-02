@@ -1,5 +1,6 @@
 package com.example.legacy.dto;
 
+/** 투자자 화면 전용 DTO. DB 없이 메모리 저장소에서만 사용한다. */
 public class InvestorDto {
     private long investorId;
     private String investorName;
