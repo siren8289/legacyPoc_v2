@@ -227,6 +227,52 @@ NIST AI RMF를 적용하는 경우 다음 기준으로 관리합니다.
 
 ---
 
+## 2-5. QA Traceability / Release Gate 원칙
+
+LegacyPOC QA의 최우선 목표는 **리팩터 후에도 legacy behavior와 데이터가 보존되는지 증명하는 것**입니다. PRD의 PRD → SRS → SDD → Code → Test 요구를 RTM에 반영하고, 각 FR은 controller, service, repository, entity, migration, test와 연결합니다.
+
+위험 기반 우선순위는 다음처럼 둡니다.
+
+| Priority | 대상 |
+| --- | --- |
+| P0 | CRUD 결과 불일치, 데이터 손실, transaction partial write, migration corruption |
+| P1 | invalid input/error contract 회귀, search/sort 오류, 권한 문제 |
+| P2 | 성능/maintainability 개선 미충족 |
+
+테스트 설계는 legacy/refactor parity와 데이터 보존을 중심으로 둡니다.
+
+| Test Type | 검증 대상 |
+| --- | --- |
+| Contract Test | legacy/refactor API response parity |
+| Repository Contract | MemoryRepository/JpaRepository 동일 service behavior |
+| Migration Test | row count, business key, field value reconciliation |
+| Transaction/Concurrency | rollback, partial write 방지, lost update 확인 |
+| Performance Benchmark | fixed environment 기준 p50/p95, plan, read rows/buffers |
+| Security Test | authorization, input validation, error disclosure |
+
+모든 test run은 evidence를 남깁니다. 기록 항목은 commit, profile, DB, fixture, command/request, expected, actual, status, log/SQL/plan 링크입니다. 실제 실행하지 않은 case는 통과로 간주하지 않고 `NOT EXECUTED`로 둡니다.
+
+release gate 기본 조건은 다음과 같습니다.
+
+| Gate | 기준 |
+| --- | --- |
+| P0 Parity | P0 parity 100% |
+| Migration | mismatch 0 또는 승인된 예외 |
+| Defect | open critical defect 0 |
+| Rollback | rollback rehearsal 완료 |
+| Contract | API contract diff 검토 완료 |
+| Performance | 기능 parity 통과 후에만 release benefit으로 인정 |
+
+공식문서 기준은 다음 항목을 중심으로 둡니다.
+
+| 영역 | 공식문서 |
+| --- | --- |
+| 테스트 기본 원칙 | [ISTQB CTFL v4.0](https://test.istqb.org/certifications/certified-tester-foundation-level-ctfl-v4-0/) |
+| 품질 모델 | [ISO/IEC 25010:2023](https://www.iso.org/standard/78176.html) |
+| 보안 테스트 | [OWASP WSTG](https://owasp.org/www-project-web-security-testing-guide/latest/) |
+
+---
+
 ## 3. Legacy 코드 효율화
 
 ### 3-1. Servlet action O(1) 라우팅
