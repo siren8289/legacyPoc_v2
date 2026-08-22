@@ -191,6 +191,42 @@ p50/p95 latency와 DB plan은 분리해 기록합니다. 작은 표본의 한 �
 
 ---
 
+## 2-4. AI / ML 적용 경계
+
+현재 LegacyPOC의 핵심 런타임 기능은 AI/ML이 아닙니다. 이 프로젝트의 우선순위는 deterministic CRUD, repository/profile 교체, DB migration, parity 검증, 성능 측정입니다. AI가 CRUD 결과나 migration 결과를 자동 수정하거나 release를 승인하지 않습니다.
+
+AI 문서는 향후 코드 현대화 분석 보조를 도입할 경우의 조건부 설계로만 관리합니다. 현재 구현된 기능처럼 서술하지 않고, 도입하더라도 **read-only reviewer assistance** 범위로 제한합니다.
+
+| 구분 | 기준 |
+| --- | --- |
+| Current Boundary | CRUD 결과, migration 결과, release 승인은 deterministic test와 사람이 판단 |
+| Optional Use Cases | code smell 설명, refactor 후보 분류, migration diff 요약, test failure triage |
+| Write Boundary | 실제 코드 변경과 DB write는 사람이 검토한 뒤 별도 작업으로 실행 |
+| Evaluation | 같은 commit/snapshot에서 rule-only 분석과 AI-assisted 분석을 paired comparison으로 비교 |
+| Adoption Rule | AI가 기존 rule 결과를 누락시키거나 reviewer 시간을 늘리면 채택하지 않음 |
+| Fixed Inputs | 평가 세트, prompt, model, version을 고정하고 결과를 비교 |
+
+NIST AI RMF를 적용하는 경우 다음 기준으로 관리합니다.
+
+| Function | LegacyPOC 적용 기준 |
+| --- | --- |
+| GOVERN | owner, 사용 제한, 변경 승인, write tool 비활성화 기본값 정의 |
+| MAP | code/data sensitivity, intended use, 외부 provider 전송 여부 식별 |
+| MEASURE | hallucination, unsupported suggestion, precision, rule-result 누락 여부 측정 |
+| MANAGE | disable, fallback, human review, prompt/model 변경 승인 절차 정의 |
+
+보안 기준은 소스코드와 DB schema가 외부 provider로 전송되는 경우에 특히 강화합니다. 데이터 분류, secret 제거, retention 정책을 먼저 확인하고, tool 권한은 least privilege를 적용합니다.
+
+공식문서 기준은 다음 항목을 중심으로 둡니다.
+
+| 영역 | 공식문서 |
+| --- | --- |
+| AI Risk Management Framework | [NIST AI RMF](https://www.nist.gov/itl/ai-risk-management-framework) |
+| AI RMF 실행 가이드 | [NIST AI RMF Playbook](https://www.nist.gov/itl/ai-risk-management-framework/nist-ai-rmf-playbook) |
+| 생성형 AI 프로파일 | [NIST GenAI Profile](https://www.nist.gov/itl/ai-risk-management-framework/ai-risk-management-framework-resources) |
+
+---
+
 ## 3. Legacy 코드 효율화
 
 ### 3-1. Servlet action O(1) 라우팅
