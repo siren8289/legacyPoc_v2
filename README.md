@@ -28,6 +28,38 @@ GitHub 공식문서에서도 README는 프로젝트가 왜 유용한지, 무엇�
 
 ---
 
+## 2-1. 리팩터링 검증 원칙
+
+LegacyPOC 백엔드의 핵심은 **기존 동작을 깨지 않고 리팩터링 구조와 DB 구현을 교체한 뒤, PRD → SRS → SDD → Code → Test 추적성으로 parity를 증명하는 것**입니다. 새 구조가 더 깔끔하다는 이유만으로 API 동작이나 비즈니스 결과를 바꾸지 않습니다.
+
+입출고 기능은 SRS 기준으로 `list`, `detail`, `create`, `update`, `delete`를 우선 검증 범위로 둡니다. legacy와 refactor가 같은 입력에 대해 같은 비즈니스 결과를 내는지 확인하고, 차이가 있다면 의도한 개선인지 regression인지 PRD/SRS/SDD/Test ID로 추적합니다.
+
+| 검증 축 | 기준 |
+| --- | --- |
+| API Contract | OpenAPI 기준으로 endpoint별 path, method, request, response, error를 고정하고 legacy/refactor contract diff를 관리 |
+| DTO 경계 | Entity를 직접 반환하지 않고 DTO로 응답하며 invalid id, column, input은 일관된 4xx 오류로 변환 |
+| Repository Abstraction | MemoryRepository는 테스트·임시 실행용, JpaRepository는 영속 DB용으로 유지하고 Service는 port/interface만 의존 |
+| Transaction | `create`, `update`, `delete`는 유스케이스 단위 `@Transactional`로 묶고 저장 실패 시 partial update가 남지 않도록 검증 |
+| Concurrency | 재고·수량처럼 동시에 수정될 수 있는 값은 lost update 가능성을 동시성 테스트로 확인한 뒤 optimistic/pessimistic locking 적용 여부 결정 |
+| Validation/Security | 입력 DTO와 id/path/query parameter에 서버 검증을 적용하고, Security 적용 시 BOLA, Broken Authentication, Broken Function Level Authorization을 회귀 대상으로 관리 |
+| DB Performance | list/search는 필요한 column/projection과 pagination을 사용하고, WHERE/JOIN/ORDER BY 기준 인덱스를 `EXPLAIN (ANALYZE, BUFFERS)`로 검증 |
+| Test Matrix | contract parity, CRUD happy/invalid/not found, Memory/JPA service behavior, rollback, pagination/sort, migration reconciliation, module smoke/integration test |
+
+성능 비교는 commit, DB 종류, row count, warm-up, 반복 횟수를 고정한 상태에서 비교합니다. 이 프로젝트의 리팩터링 성공 기준은 “새 코드가 예쁘다”가 아니라, **동일 contract와 동일 business behavior를 유지하면서 구조·DB 선택지를 교체할 수 있음을 테스트로 보여주는 것**입니다.
+
+공식문서 기준은 다음 항목을 중심으로 둡니다.
+
+| 영역 | 공식문서 |
+| --- | --- |
+| API 명세 | OpenAPI Specification |
+| 입력 검증 | Spring Validation, Bean Validation |
+| 트랜잭션 | Spring Framework Transaction Management |
+| 테스트 | Spring Boot Testing |
+| 실행계획 | PostgreSQL `EXPLAIN` |
+| API 보안 | OWASP API Security Top 10 |
+
+---
+
 ## 3. Legacy 코드 효율화
 
 ### 3-1. Servlet action O(1) 라우팅
