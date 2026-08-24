@@ -137,6 +137,7 @@ Spring Boot·Vue·Next.js로 단계적 현대화한 결과를 비교할 수 있�
 | F-005 | 리팩터 1단계 | Spring Boot + Vanilla JS REST | P0 |
 | F-006 | 리팩터 2단계 | Spring Boot + Vue 3 | P1 |
 | F-007 | 리팩터 3단계 | Next.js + Spring Boot API 분리 | P1 |
+| F-008 | 리팩터 FastAPI | Spring API 계약 패리티 (Python) | P1 |
 | F-008 | 성능 개선 (chatty API 제거) | 필드 저장 후 전체 reload 제거, 일괄 저장 | P0 |
 | F-009 | 검색 구조 개선 | 투자자 이름 검색 인덱스/DB LIKE | P1 |
 | F-010 | 문서화 | PRD, README, CODE-WALKTHROUGH | P0 |

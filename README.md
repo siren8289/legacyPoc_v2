@@ -2,7 +2,7 @@
 
 ## 1. 핵심 한 줄
 
-> **LegacyPOC는 Servlet/JDBC 레거시 구조와 Spring Boot 리팩터 구조를 비교하면서, 라우팅·업데이트·검색·목록 조회·DB 인덱스·멀티 DB 스키마까지 효율화 포인트를 단계적으로 보여주는 교육용 PoC입니다.**
+> **LegacyPOC는 Servlet/JDBC 레거시 구조와 Spring Boot·FastAPI 리팩터 구조를 비교하면서, 라우팅·업데이트·검색·목록 조회·DB 인덱스·멀티 DB 스키마까지 효율화 포인트를 단계적으로 보여주는 교육용 PoC입니다.**
 
 ---
 
@@ -15,10 +15,10 @@ Legacy Servlet + jQuery + Oracle
 → 일부 안티패턴을 의도적으로 유지
 → 어디가 불편하고 느려지는지 보여줌
 
-Spring Boot Refactor 3종
-→ Controller → Service → Repository
+Spring Boot Refactor 3종 + FastAPI
+→ Controller/Router → Service → Repository
 → DTO Projection + Pageable
-→ memory / jpa 전환
+→ memory / jpa(SQLAlchemy) 전환
 → 멀티 DB 스키마 분리
 ```
 
@@ -429,14 +429,15 @@ After
 
 ---
 
-## 5. Refactor 3모듈 코드 효율화
+## 5. Refactor 모듈 코드 효율화
 
-Refactor 3모듈은 같은 도메인을 Spring Boot 구조로 다시 만든 버전입니다.
+Refactor 모듈은 같은 도메인을 Spring Boot 3종과 FastAPI로 다시 만든 버전입니다.
 
 ```text
 refactor-springboot-vanilla
 refactor-springboot-vue
 refactor-nextjs-springboot-api
+refactor-fastapi
 ```
 
 ---
@@ -589,6 +590,27 @@ DB가 없어도 연습용 번호표 발급기가 있어서 테스트 데이터�
 
 ---
 
+### 5-8. FastAPI 백엔드 패리티
+
+`refactor-fastapi`는 Spring Boot와 같은 `/api/warehouses`, `/api/investors` 계약을 Python으로 재현합니다.
+
+```text
+FastAPI Router
+→ Service
+→ Repository Protocol
+   ├ memory dict + 검색 버킷
+   └ SQLAlchemy Entity + mapper
+```
+
+- Depends 주입으로 Service가 Protocol만 의존한다 (생성자 DI 대응).
+- 목록은 projection + page, 필드 수정은 enum whitelist + PATCH row 반환이다.
+- 공통 예외 핸들러는 stack/SQL/secret을 응답에 넣지 않는다.
+- OpenAPI는 `/docs`에서 확인한다. 성능 개선율은 EXPLAIN/벤치마크 없이 주장하지 않는다.
+
+공식문서: FastAPI Dependency Injection, SQLAlchemy 2.0 Query Guide.
+
+---
+
 ## 6. DB 효율화 요약
 
 LegacyPOC의 DB 효율화는 `refactor-db-schema/`에서 MariaDB, MySQL, PostgreSQL, Oracle 4개 dialect를 기준으로 관리합니다.
@@ -724,6 +746,10 @@ LegacyPOC/
 ├── refactor-nextjs-springboot-api/
 │   └── Next.js + Spring API
 │
+├── refactor-fastapi/
+│   └── FastAPI + memory/SQLAlchemy
+│       Spring API 계약 패리티, OpenAPI `/docs`
+│
 └── refactor-db-schema/
     └── MariaDB / MySQL / PostgreSQL / Oracle
         DDL, 인덱스, EXPLAIN, 파티션, View/MV 예시
@@ -751,7 +777,7 @@ LegacyPOC는 레거시 Servlet/JDBC 구조와 Spring Boot 리팩터 구조를 �
 
 Legacy 쪽에서는 `HashMap<String, Function>` 기반 action routing으로 if-else 분기를 줄였고, Java `HashMap`은 `get`, `put` 기본 연산에서 constant-time 성능을 제공합니다. 또한 `WarehouseIoColumn` enum과 `updateColumn()`을 통해 수정 가능한 컬럼을 whitelist로 제한하고, 값은 `PreparedStatement` parameter로 처리해 update 로직 중복과 동적 SQL 위험을 줄였습니다.
 
-Refactor 3모듈은 Controller → Service → Repository 구조, 생성자 DI, Domain/JPA Entity 분리, DTO Projection, Pageable, open-in-view 비활성화, GlobalExceptionHandler를 적용했습니다. Spring Data JPA는 DTO projection과 repository 기반 데이터 접근을 지원하고, Spring Framework는 Dependency Injection으로 객체 간 의존성을 외부에서 주입하는 구조를 제공합니다.
+Refactor 모듈은 Controller/Router → Service → Repository 구조, 생성자 DI(Depends), Domain/Entity 분리, DTO Projection, Pageable, open-in-view 비활성화(또는 세션 밖 Entity 미노출), GlobalExceptionHandler를 적용했습니다. Spring Data JPA와 FastAPI+SQLAlchemy는 각각 repository 기반 데이터 접근을 지원하고, DI로 객체 간 의존성을 외부에서 주입하는 구조를 제공합니다.
 
 DB 효율화는 `refactor-db-schema/` 아래에서 MariaDB, MySQL, PostgreSQL, Oracle 4개 dialect별 DDL과 EXPLAIN 검증 스크립트를 분리한 점이 핵심입니다. 활성 입출고 목록은 `(deleted_yn, warehouse_io_id DESC)` 복합 인덱스로 최신순 목록 조회를 지원하고, 증분 ETL은 `(updated_at, warehouse_io_id)` 인덱스로 변경분 조회를 빠르게 확인할 수 있게 했습니다.
 
@@ -761,7 +787,7 @@ DB 효율화는 `refactor-db-schema/` 아래에서 MariaDB, MySQL, PostgreSQL, O
 
 ## 12. 한 줄 설명
 
-> **LegacyPOC는 Servlet/JDBC 레거시의 God Servlet·전체 재조회·전체 스캔 문제를 일부 개선하고, Spring Boot 리팩터 3종에서는 3계층·생성자 DI·DTO Projection·Pageable·멀티 DB 스키마·EXPLAIN 검증으로 코드와 DB 효율화를 비교할 수 있게 만든 교육용 리팩터링 PoC입니다.**
+> **LegacyPOC는 Servlet/JDBC 레거시의 God Servlet·전체 재조회·전체 스캔 문제를 일부 개선하고, Spring Boot 리팩터 3종과 FastAPI에서는 계층 분리·DI·DTO Projection·Pageable·멀티 DB 스키마·EXPLAIN 검증으로 코드와 DB 효율화를 비교할 수 있게 만든 교육용 리팩터링 PoC입니다.**
 
 ---
 

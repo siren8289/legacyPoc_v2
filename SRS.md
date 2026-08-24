@@ -601,11 +601,13 @@ Investor     — 독립 엔티티
 
 | API ID | Method | Endpoint | 포트 | FR |
 | --- | --- | --- | --- | --- |
-| API-R01 | GET | `/api/warehouses` | 8081~8083 | FR-001 |
-| API-R02 | GET | `/api/warehouses/{id}` | 8081~8083 | FR-002 |
-| API-R03 | POST | `/api/warehouses` | 8081~8083 | FR-005 |
-| API-R04 | GET | `/api/investors?name={q}` | 8081~8083 | FR-007 |
-| API-R05 | POST | `/api/investors` | 8081~8083 | FR-008 |
+| API-R01 | GET | `/api/warehouses` | 8081~8084 | FR-001 |
+| API-R02 | GET | `/api/warehouses/{id}` | 8081~8084 | FR-002 |
+| API-R03 | POST | `/api/warehouses` | 8081~8084 | FR-005 |
+| API-R04 | GET | `/api/investors?name={q}` | 8081~8084 | FR-007 |
+| API-R05 | POST | `/api/investors` | 8081~8084 | FR-008 |
+| API-R06 | PATCH | `/api/warehouses/{id}` | 8084 | FR-004, FR-007 |
+| API-R07 | DELETE | `/api/warehouses/{id}` | 8084 | FR-006 |
 
 ## 10.3 API 상세
 

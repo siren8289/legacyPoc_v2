@@ -32,6 +32,7 @@ tb_warehouse_io / tb_investor
 | springboot-vanilla | 8081 | MariaDB `legacy_refactor` | `mariadb/` |
 | springboot-vue | 8082 | MySQL `legacy_vue_refactor` | `mysql/` |
 | springboot-api (nextjs) | 8083 | PostgreSQL `legacy_next_refactor` | `postgresql/` |
+| fastapi | 8084 | MySQL 재사용 또는 SQLite 테스트 | `mysql/` (동일 테이블) |
 | (참고) Oracle | — | — | `oracle/` |
 
 **DDL 상세:** [DDL_GUIDE.md](./DDL_GUIDE.md) · **PK:** [PK_IDENTITY_GUIDE.md](./PK_IDENTITY_GUIDE.md) · **인덱스:** [INDEX_GUIDE.md](./INDEX_GUIDE.md) · **SELECT:** [SELECT_QUERY_GUIDE.md](./SELECT_QUERY_GUIDE.md) · **EXPLAIN:** [EXPLAIN_GUIDE.md](./EXPLAIN_GUIDE.md) · **Seed/Upsert:** [SEED_UPSERT_GUIDE.md](./SEED_UPSERT_GUIDE.md) · **변경 추적:** [CHANGE_TRACKING_GUIDE.md](./CHANGE_TRACKING_GUIDE.md) · **파티셔닝:** [PARTITIONING_GUIDE.md](./PARTITIONING_GUIDE.md) · **View/요약:** [VIEW_SUMMARY_GUIDE.md](./VIEW_SUMMARY_GUIDE.md)

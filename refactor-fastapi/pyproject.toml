@@ -1,0 +1,11 @@
+[project]
+name = "legacypoc-refactor-fastapi"
+version = "1.0.0"
+description = "Spring Boot API parity FastAPI refactor for LegacyPoc"
+requires-python = ">=3.9"
+readme = "README.md"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-q"

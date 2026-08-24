@@ -32,7 +32,8 @@ Code
  ├ legacy-servlet-jquery-oracle/
  ├ refactor-springboot-vanilla/
  ├ refactor-springboot-vue/
- └ refactor-nextjs-springboot-api/
+ ├ refactor-nextjs-springboot-api/
+ └ refactor-fastapi/
 ```
 
 SDD가 답하는 질문:
@@ -92,26 +93,30 @@ Oracle JDBC  ──SQLException──→  LinkedHashMap 메모리
 | Util | `DbConnection`, `LegacyJsonWriter` | DB 연결, 수동 JSON |
 | Enum | `WarehouseIoColumn` | UPDATE 컬럼 화이트리스트 |
 
-### 4.2 리팩터 (`refactor-springboot-*`)
+### 4.2 리팩터 (`refactor-springboot-*`, `refactor-fastapi`)
 
 ```text
-Browser (Vanilla / Vue / Next.js)
+Browser / API Client
  ↓
-@RestController
+@RestController 또는 FastAPI Router
  ↓
-@Service
+@Service / Service
  ↓
-@Repository (LinkedHashMap + AtomicLong)
+Repository port
+ ├ Memory (LinkedHashMap / dict)
+ └ JPA / SQLAlchemy adapter
 ```
 
 | 계층 | 책임 |
 | --- | --- |
-| Controller | HTTP 메서드·경로, `ApiResponse` 래핑 |
-| Service | null 기본값 정규화, 비즈니스 흐름 |
-| Repository | 인메모리 CRUD, 시퀀스 발급 |
-| Model (record) | 도메인 데이터 |
+| Controller / Router | HTTP 메서드·경로, `ApiResponse` 래핑 |
+| Service | null 기본값 정규화, 비즈니스 흐름, column whitelist |
+| Repository | 인메모리/DB CRUD, 시퀀스 발급 |
+| Model (record/dataclass) | 도메인 데이터 |
 | DTO | `CreateWarehouseRequest`, `CreateInvestorRequest` |
-| Common | `ApiResponse<T>` |
+| Common | `ApiResponse<T>`, exception handler |
+
+생성자 DI(Spring) 또는 FastAPI `Depends`로 구현체를 주입하고, profile/`APP_REPOSITORY_TYPE`으로 memory와 DB 구현을 고른다.
 
 ### 4.3 아키텍처 비교 (Before / After)
 
@@ -286,6 +291,8 @@ CREATE INDEX IDX_INVESTOR_NAME
 | API-R03 | POST | `/api/warehouses` | `create(body)` |
 | API-R04 | GET | `/api/investors?name=` | `list(name)` |
 | API-R05 | POST | `/api/investors` | `create(body)` |
+| API-R06 | PATCH | `/api/warehouses/{id}` | `updateField` (FastAPI 노출, FR-004/007) |
+| API-R07 | DELETE | `/api/warehouses/{id}` | soft delete (FastAPI 노출, FR-006) |
 
 ### 8.3 응답 형식
 

@@ -31,6 +31,7 @@ PRD → SRS → SDD → ERD/API/DB Schema → Test/QAQC (본 문서) → Release
 * 리팩터 `refactor-springboot-vanilla` (:8081)
 * 리팩터 `refactor-springboot-vue` (:8082)
 * 리팩터 `refactor-nextjs-springboot-api` (:8083 + :3000)
+* 리팩터 `refactor-fastapi` (:8084)
 
 ---
 
@@ -94,9 +95,9 @@ PRD → SRS → SDD → ERD/API/DB Schema → Test/QAQC (본 문서) → Release
 | OS | macOS / Linux / Windows | 동일 |
 | Java | 8+ | 17+ |
 | Frontend | jQuery 3.7, RealGrid CDN | Vanilla / Vue CDN / Next.js 14 |
-| Backend | `LegacySampleServer` | Spring Boot 3.3.5 |
-| Database | Oracle (선택), 메모리 fallback | 인메모리 Map |
-| 포트 | 8080 | 8081, 8082, 8083, 3000 |
+| Backend | `LegacySampleServer` | Spring Boot 3.3.5 / FastAPI |
+| Database | Oracle (선택), 메모리 fallback | 인메모리 Map / SQLAlchemy |
+| 포트 | 8080 | 8081, 8082, 8083, 8084, 3000 |
 | API Tool | curl, Chrome DevTools Network | curl, Postman |
 | 브라우저 | Chrome 최신 | Chrome 최신 |
 
@@ -113,6 +114,10 @@ cd refactor-springboot-vanilla/springboot-refactor && mvn spring-boot:run
 
 # 리팩터 3단계 API
 cd refactor-nextjs-springboot-api/springboot-api && mvn spring-boot:run
+
+# 리팩터 FastAPI
+cd refactor-fastapi && python3 -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt && uvicorn app.main:app --port 8084
 ```
 
 ---

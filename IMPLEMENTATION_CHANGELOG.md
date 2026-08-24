@@ -361,8 +361,21 @@ Service는 `persistence` 패키지를 import하지 않는다. 테이블 컬럼·
 - `refactor-db-schema/VIEW_SUMMARY_GUIDE.md` — 선택 기준·JPA와 분리·체크리스트
 - `refactor-db-schema/*/summary-views-example.sql` — `vw_warehouse_io_active`, 창고/등급별 요약 예시
 
+---
 
+## 20. FastAPI 백엔드 패리티 (2026-08-24)
 
+| 항목 | 내용 |
+|------|------|
+| 모듈 | `refactor-fastapi/` (:8084) |
+| 계약 | Spring Boot와 동일 `/api/warehouses`, `/api/investors` JSON 키 |
+| 계층 | Router → Service → Repository Protocol |
+| 저장소 | memory (기본) / SQLAlchemy (`APP_REPOSITORY_TYPE`) |
+| 추가 노출 | PATCH field update + DELETE soft delete (FR-004/006/007) |
+| 오류 | 공통 핸들러, stack/SQL 미노출 (ERR-007 404) |
+| 테스트 | `pytest` memory + SQLite adapter |
+| 문서 | 모듈 README/CODE-WALKTHROUGH, 루트 README·SDD·SRS·QA·PRD 반영 |
 
+성능 수치는 주장하지 않는다. DB plan은 `refactor-db-schema/*/explain-verify.sql` 실행 evidence로만 기록한다.
 
 
