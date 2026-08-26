@@ -23,10 +23,10 @@
 ## 적용 순서
 
 ```bash
-mysql -u legacy_user -plegacy_pass legacy_refactor < refactor-db-schema/mariadb/schema.sql
-mysql -u legacy_user -plegacy_pass legacy_refactor < refactor-db-schema/mariadb/data.sql
+mysql -u legacy_user -plegacy_pass legacy_refactor < db/mariadb/schema.sql
+mysql -u legacy_user -plegacy_pass legacy_refactor < db/mariadb/data.sql
 # 재실행해도 멱등 (upsert)
-mysql -u legacy_user -plegacy_pass legacy_refactor < refactor-db-schema/mariadb/data.sql
+mysql -u legacy_user -plegacy_pass legacy_refactor < db/mariadb/data.sql
 ```
 
 ---

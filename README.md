@@ -540,16 +540,16 @@ FastAPI Router
 
 ## 6. DB 효율화 요약
 
-LegacyPOC의 DB 효율화는 `refactor-db-schema/`에서 MariaDB, MySQL, PostgreSQL, Oracle 4개 dialect를 기준으로 관리합니다.
+LegacyPOC의 DB 효율화는 `db/`에서 MariaDB, MySQL, PostgreSQL, Oracle 4개 dialect를 기준으로 관리합니다.
 
 | 항목                  | 내용                                                                        | 파일                                                                                                |
 | ------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| 복합 인덱스, 입출고 목록      | `(deleted_yn, warehouse_io_id DESC)`                                      | `refactor-db-schema/*/schema.sql`, `legacy-servlet-jquery-oracle/oracle-schema/schema.oracle.sql` |
+| 복합 인덱스, 입출고 목록      | `(deleted_yn, warehouse_io_id DESC)`                                      | `db/*/schema.sql`, `legacy-servlet-jquery-oracle/oracle-schema/schema.oracle.sql` |
 | 복합 인덱스, 증분 ETL      | `(updated_at, warehouse_io_id)`                                           | schema + `INDEX_GUIDE.md`                                                                         |
 | 투자자 이름 검색           | `idx_investor_name`                                                       | schema                                                                                            |
 | 변경 추적 컬럼            | `created_at`, `updated_at`, `deleted_at`, `source_system`, `etl_batch_id` | schema + `CHANGE_TRACKING_GUIDE.md`                                                               |
-| 멱등 시드               | UPSERT / MERGE                                                            | `refactor-db-schema/*/data.sql`, `SEED_UPSERT_GUIDE.md`                                           |
-| EXPLAIN 검증          | Q1~Q4 실행계획                                                                | `refactor-db-schema/*/explain-verify.sql`, `EXPLAIN_GUIDE.md`                                     |
+| 멱등 시드               | UPSERT / MERGE                                                            | `db/*/data.sql`, `SEED_UPSERT_GUIDE.md`                                           |
+| EXPLAIN 검증          | Q1~Q4 실행계획                                                                | `db/*/explain-verify.sql`, `EXPLAIN_GUIDE.md`                                     |
 | 파티셔닝 예시             | RANGE partition 예시                                                        | `*/partition-example.sql`, `PARTITIONING_GUIDE.md`                                                |
 | View / MV / Summary | 집계 분리                                                                     | `*/summary-views-example.sql`, `VIEW_SUMMARY_GUIDE.md`                                            |
 | DDL 가이드             | MariaDB / MySQL / PostgreSQL / Oracle                                     | `DDL_GUIDE.md`, `PK_IDENTITY_GUIDE.md`                                                            |
@@ -622,7 +622,7 @@ PostgreSQL 공식문서는 `EXPLAIN`을 사용하면 planner가 어떤 query pla
 
 ### 7-5. MariaDB / MySQL / PostgreSQL / Oracle 멀티 dialect
 
-LegacyPOC는 `refactor-db-schema/{mariadb,mysql,postgresql,oracle}`처럼 DB별 DDL을 분리했습니다.
+LegacyPOC는 `db/{mariadb,mysql,postgresql,oracle}`처럼 DB별 DDL을 분리했습니다.
 
 ```text
 하나의 공통 SQL만 사용
@@ -677,7 +677,7 @@ LegacyPOC/
 │   └── FastAPI + memory/SQLAlchemy
 │       Spring API 계약 패리티, OpenAPI `/docs`
 │
-└── refactor-db-schema/
+└── db/
     └── MariaDB / MySQL / PostgreSQL / Oracle
         DDL, 인덱스, EXPLAIN, 파티션, View/MV 예시
 ```
@@ -706,7 +706,7 @@ Legacy 쪽에서는 `HashMap<String, Function>` 기반 action routing으로 if-e
 
 Refactor 모듈은 Controller/Router → Service → Repository 구조, 생성자 DI(Depends), Domain/Entity 분리, DTO Projection, Pageable, open-in-view 비활성화(또는 세션 밖 Entity 미노출), GlobalExceptionHandler를 적용했습니다. Spring Data JPA와 FastAPI+SQLAlchemy는 각각 repository 기반 데이터 접근을 지원하고, DI로 객체 간 의존성을 외부에서 주입하는 구조를 제공합니다.
 
-DB 효율화는 `refactor-db-schema/` 아래에서 MariaDB, MySQL, PostgreSQL, Oracle 4개 dialect별 DDL과 EXPLAIN 검증 스크립트를 분리한 점이 핵심입니다. 활성 입출고 목록은 `(deleted_yn, warehouse_io_id DESC)` 복합 인덱스로 최신순 목록 조회를 지원하고, 증분 ETL은 `(updated_at, warehouse_io_id)` 인덱스로 변경분 조회를 빠르게 확인할 수 있게 했습니다.
+DB 효율화는 `db/` 아래에서 MariaDB, MySQL, PostgreSQL, Oracle 4개 dialect별 DDL과 EXPLAIN 검증 스크립트를 분리한 점이 핵심입니다. 활성 입출고 목록은 `(deleted_yn, warehouse_io_id DESC)` 복합 인덱스로 최신순 목록 조회를 지원하고, 증분 ETL은 `(updated_at, warehouse_io_id)` 인덱스로 변경분 조회를 빠르게 확인할 수 있게 했습니다.
 
 결과적으로 LegacyPOC는 “레거시를 그냥 Spring으로 바꿨다”가 아니라, 동일한 업무 기능을 기준으로 레거시 구조의 병목과 리팩터 구조의 개선 효과를 비교할 수 있게 만든 프로젝트입니다. Servlet 쪽에서는 API 호출 감소와 검색 후보 축소 구조를 보여주고, Refactor 쪽에서는 목록 컬럼 I/O를 줄이고 페이지 단위 조회를 적용하는 DTO Projection + Pageable 구조를 보여줍니다.
 

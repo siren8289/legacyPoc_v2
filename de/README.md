@@ -34,4 +34,4 @@ Legacy Snapshot
 - batch마다 `run_id`, source version, row count, reject count를 기록한다.
 - 성능 주장은 `EXPLAIN ANALYZE` 등 실행 evidence 없이 확정하지 않는다.
 
-관련 DB DDL·EXPLAIN·시드 스크립트는 루트 `refactor-db-schema/`에서 관리합니다.
+관련 DB DDL·EXPLAIN·시드 스크립트는 루트 `db/`에서 관리합니다.

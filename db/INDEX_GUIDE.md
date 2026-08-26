@@ -111,7 +111,7 @@ CREATE INDEX idx_warehouse_updated_at
 
 | 경로 | 설명 |
 |------|------|
-| `refactor-db-schema/*/schema.sql` | 인덱스 DDL |
+| `db/*/schema.sql` | 인덱스 DDL |
 | `legacy-servlet-jquery-oracle/oracle-schema/schema.oracle.sql` | 레거시 Oracle |
 | `*JpaEntity extends ChangeTrackedEntity` | JPA 갱신 시각·DE 메타 |
 
