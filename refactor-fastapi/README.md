@@ -42,7 +42,7 @@ SQLAlchemy(MySQL) 모드:
 
 ```bash
 # 스키마는 Spring Vue 모듈과 동일 테이블을 재사용한다.
-# mysql ... < ../refactor-db-schema/mysql/schema.sql
+# mysql ... < ../db/mysql/schema.sql
 APP_REPOSITORY_TYPE=sqlalchemy \
 APP_DATABASE_URL=mysql+pymysql://legacy_user:legacy_pass@localhost:3306/legacy_vue_refactor \
 uvicorn app.main:app --port 8084
@@ -56,4 +56,4 @@ source .venv/bin/activate
 pytest
 ```
 
-기본 테스트는 memory와 SQLite adapter다. MySQL EXPLAIN 수치는 이 모듈이 성능을 주장하지 않으며, `refactor-db-schema/mysql/explain-verify.sql` 실행 결과로만 기록한다.
+기본 테스트는 memory와 SQLite adapter다. MySQL EXPLAIN 수치는 이 모듈이 성능을 주장하지 않으며, `db/mysql/explain-verify.sql` 실행 결과로만 기록한다.

@@ -15,10 +15,10 @@
 
 | 용도 | 경로 |
 |------|------|
-| Refactor MariaDB | `refactor-db-schema/mariadb/schema.sql` |
-| Refactor MySQL | `refactor-db-schema/mysql/schema.sql` |
-| Refactor PostgreSQL | `refactor-db-schema/postgresql/schema.sql` |
-| Refactor Oracle | `refactor-db-schema/oracle/schema.sql` |
+| Refactor MariaDB | `db/mariadb/schema.sql` |
+| Refactor MySQL | `db/mysql/schema.sql` |
+| Refactor PostgreSQL | `db/postgresql/schema.sql` |
+| Refactor Oracle | `db/oracle/schema.sql` |
 | Legacy Oracle (실제) | `legacy-servlet-jquery-oracle/oracle-schema/schema.oracle.sql` |
 | Legacy Mock (MariaDB 호환) | `legacy-servlet-jquery-oracle/oracle-schema/schema.mock.sql` |
 
@@ -97,4 +97,4 @@ CONSTRAINT pk_tb_warehouse_io PRIMARY KEY (warehouse_io_id)
 # 4. data.sql 재실행 (Upsert 멱등 검증 — row 수 불변)
 ```
 
-각 모듈 `src/main/resources/schema.sql`은 `refactor-db-schema/<dialect>/schema.sql`과 동기화한다.
+각 모듈 `src/main/resources/schema.sql`은 `db/<dialect>/schema.sql`과 동기화한다.

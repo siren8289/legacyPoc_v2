@@ -76,7 +76,7 @@ CONSTRAINT pk_tb_warehouse_io PRIMARY KEY (warehouse_io_id)
 
 ### Oracle — SEQUENCE 방식 (대안, 참고용)
 
-Identity 대신 전통적 Oracle 패턴. `refactor-db-schema/oracle/sequence-alternative.sql` 참고.
+Identity 대신 전통적 Oracle 패턴. `db/oracle/sequence-alternative.sql` 참고.
 
 ```sql
 CREATE SEQUENCE seq_warehouse_io START WITH 1001 INCREMENT BY 1 NOCACHE NOCYCLE;
@@ -128,9 +128,9 @@ private Long warehouseIoId;
 
 | 파일 | 역할 |
 |------|------|
-| `refactor-db-schema/*/schema.sql` | PK + Identity 정의 |
-| `refactor-db-schema/*/data.sql` | 시드 ID + PG `setval` |
-| `refactor-db-schema/oracle/sequence-alternative.sql` | Oracle SEQUENCE 대안 |
+| `db/*/schema.sql` | PK + Identity 정의 |
+| `db/*/data.sql` | 시드 ID + PG `setval` |
+| `db/oracle/sequence-alternative.sql` | Oracle SEQUENCE 대안 |
 | `*JpaEntity.java` | `@GeneratedValue(IDENTITY)` |
 
 ## 체크리스트

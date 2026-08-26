@@ -42,8 +42,8 @@ tb_warehouse_io / tb_investor
 ```bash
 # MariaDB 예시
 mysql -u root -p -e "CREATE DATABASE legacy_refactor CHARACTER SET utf8mb4;"
-mysql -u legacy_user -plegacy_pass legacy_refactor < refactor-db-schema/mariadb/schema.sql
-mysql -u legacy_user -plegacy_pass legacy_refactor < refactor-db-schema/mariadb/data.sql
+mysql -u legacy_user -plegacy_pass legacy_refactor < db/mariadb/schema.sql
+mysql -u legacy_user -plegacy_pass legacy_refactor < db/mariadb/data.sql
 ```
 
 ## 저장소 전환

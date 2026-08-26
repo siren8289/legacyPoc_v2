@@ -22,7 +22,7 @@
 
 ```bash
 # MariaDB 예시 (schema + data 적용 후)
-mysql -u legacy_user -plegacy_pass legacy_refactor < refactor-db-schema/mariadb/explain-verify.sql
+mysql -u legacy_user -plegacy_pass legacy_refactor < db/mariadb/explain-verify.sql
 ```
 
 ## 검증 대상 쿼리 (4종)
